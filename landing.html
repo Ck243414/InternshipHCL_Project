@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f0f4f8;
+            font-family: Raleway, sans-serif;
+        }
+
+        .content {
+            text-align: center;
+            background: #fff;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .session-info {
+            font-size: 1.2em;
+            margin-bottom: 1em;
+        }
+
+        .user-info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.8em;
+        }
+
+        .dag-info {
+            text-align: left;
+            margin-top: 2em;
+        }
+
+        .dag-info label {
+            font-weight: bold;
+        }
+
+        .trigger-button {
+            margin-top: 2em;
+            padding: 1em 2em;
+            background-color: #28a745; 
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .trigger-button:hover {
+            background-color: #218838;
+        }
+        .dag-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1em;
+        }
+
+        .dag-info label {
+            margin-right: 0.5em;
+        }
+
+        .dag-info input[type="text"] {
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .data-table {
+            margin-top: 2em;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.5em;
+            border: 1px solid #ccc;
+        }
+
+        .data-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="session-info">
+                <p>Login session of: <span id="username"></span></p>
+            </div>
+            <div class="user-info">
+                <p>User logged in: <span id="loggedInUsername"></span></p>
+            </div>
+            <div class="dag-info">
+                <label for="dagUrl">DAG URL:</label> <span id="dagUrl"> </span><br>
+            </div>
+            <div class="dag-info">
+                <label for="dagIdInput">Enter DAG ID:</label>
+                <input type="text" id="dagIdInput">
+            </div>
+            <button class="trigger-button" id="triggerDagBtn">TRIGGER DAG</button>
+            <div id="tableContainer"></div> 
+            <div id="statusTableContainer"></div> 
+            <div id="tasksTableContainer"></div> 
+        </div>
+    </div>
+
+    <script>
+        const username = getUsername(); 
+        document.getElementById("username").textContent = username;
+
+        const loggedInUsername = getLoggedInUsername(); 
+        document.getElementById("loggedInUsername").textContent = loggedInUsername;
+
+        function getUsername() {
+            
+            return "chaitanya";
+        }
+
+        function getLoggedInUsername() {
+            return "chaitanya"; 
+        }
+
+        function fetchData(dagId) {
+            fetch(`/data?dagId=${dagId}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayData(data);
+                    displayStatusData(data); 
+                    displayTasksData(data); 
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function displayData(data) {
+            const tableContainer = document.getElementById("tableContainer");
+            tableContainer.innerHTML = ""; 
+            
+            const table = document.createElement("table");
+            table.classList.add("data-table");
+
+            const headerRow = document.createElement("tr");
+            for (const key in data[0]) {
+                const th = document.createElement("th");
+                th.textContent = key;
+                headerRow.appendChild(th);
+            }
+            table.appendChild(headerRow);
+
+            data.forEach(rowData => {
+                const row = document.createElement("tr");
+                for (const key in rowData) {
+                    const td = document.createElement("td");
+                    td.textContent = rowData[key];
+                    row.appendChild(td);
+                }
+                table.appendChild(row);
+            });
+
+            tableContainer.appendChild(table);
+        }
+
+        function displayStatusData(data) {
+            const statusTableContainer = document.getElementById("statusTableContainer");
+            statusTableContainer.innerHTML = ""; 
+            
+            const table = document.createElement("table");
+            table.classList.add("data-table");
+
+            const headerRow = document.createElement("tr");
+            for (const key in data[0]) {
+                const th = document.createElement("th");
+                th.textContent = key;
+                headerRow.appendChild(th);
+            }
+            table.appendChild(headerRow);
+
+            data.forEach(rowData => {
+                if (rowData.hasOwnProperty("status")) {
+                    const row = document.createElement("tr");
+                    for (const key in rowData) {
+                        const td = document.createElement("td");
+                        td.textContent = rowData[key];
+                        row.appendChild(td);
+                    }
+                    table.appendChild(row);
+                }
+            });
+
+            statusTableContainer.appendChild(table);
+        }
+
+        function displayTasksData(data) {
+            const tasksTableContainer = document.getElementById("tasksTableContainer");
+            tasksTableContainer.innerHTML = ""; 
+            
+            const table = document.createElement("table");
+            table.classList.add("data-table");
+
+            const headerRow = document.createElement("tr");
+            for (const key in data[0]) {
+                const th = document.createElement("th");
+                th.textContent = key;
+                headerRow.appendChild(th);
+            }
+            table.appendChild(headerRow);
+
+            data.forEach(rowData => {
+                if (rowData.hasOwnProperty("task_name")) {
+                    const row = document.createElement("tr");
+                    for (const key in rowData) {
+                        const td = document.createElement("td");
+                        td.textContent = rowData[key];
+                        row.appendChild(td);
+                    }
+                    table.appendChild(row);
+                }
+            });
+
+            tasksTableContainer.appendChild(table);
+        }
+
+        document.getElementById("triggerDagBtn").addEventListener("click", function() {
+            const dagId = document.getElementById("dagIdInput").value;
+            fetchData(dagId);
+        });
+    </script>
+</body>
+</html>
+

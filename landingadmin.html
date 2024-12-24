@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/assets/landing3admin.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: right;
+            font-size: 18px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .area {
+            margin: 20px;
+        }
+        .main-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .main-menu ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+        .content {
+            margin-left: 220px; 
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Logged in session of: chaitanya
+    </div>
+    <div class="area"></div>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="/user_info">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">
+                       User Information 
+                    </span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/user_list">
+                    <i class="fa fa-globe fa-2x"></i>
+                    <span class="nav-text">
+                        User List 
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+               <a href="/">
+                     <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">
+                        Logout
+                    </span>
+                </a>
+            </li>  
+        </ul>
+    </nav>
+    <div class="content">
+        <h1>Welcome to the Admin Dashboard</h1>
+    </div>
+</body>
+</html>

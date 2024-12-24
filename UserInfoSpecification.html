@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/landing2.css">
+    <style>
+        .user-info-container {
+            margin: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .user-info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .user-info-table th, .user-info-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .user-info-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+    <title>User Information</title>
+</head>
+<body>
+    <div class="area"></div>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="UserInfoSpecification.html">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">User Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/config_dag">
+                    <i class="fa fa-globe fa-2x"></i>
+                    <span class="nav-text">DAG Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/datavalidver">
+                    <i class="fa fa-comments fa-2x"></i>
+                    <span class="nav-text">Data Validation and Verification</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/realdagconfig">
+                    <i class="fa fa-camera-retro fa-2x"></i>
+                    <span class="nav-text">Configure DAG</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cogs fa-2x"></i>
+                    <span class="nav-text">Test2</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-map-marker fa-2x"></i>
+                    <span class="nav-text">Test3</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-info fa-2x"></i>
+                    <span class="nav-text">Test4</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+                <a href="/">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="user-info-container">
+        <table class="user-info-table">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>DAG Name</th>
+                    <th>Number of Runs</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2</td>
+                    <td>ck</td>
+                    <td>xyz</td>
+                    <td>mydag1</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>ck</td>
+                    <td>xyz</td>
+                    <td>mydag2</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

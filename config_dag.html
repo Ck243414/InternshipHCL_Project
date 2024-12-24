@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/landing2.css">
+    <style>
+        .dag-container {
+            margin: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .dag-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .dag-table th, .dag-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .dag-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+    <title>Configure DAG</title>
+</head>
+<body>
+    <div class="area"></div>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="/UserInfoSpecification">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">User Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/config_dag">
+                    <i class="fa fa-globe fa-2x"></i>
+                    <span class="nav-text">DAG Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/datavalidver">
+                    <i class="fa fa-comments fa-2x"></i>
+                    <span class="nav-text">Configure DAG</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/realdagconfig">
+                    <i class="fa fa-camera-retro fa-2x"></i>
+                    <span class="nav-text">Data Validation and Verification</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cogs fa-2x"></i>
+                    <span class="nav-text">Test2</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-map-marker fa-2x"></i>
+                    <span class="nav-text">Test3</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-info fa-2x"></i>
+                    <span class="nav-text">Test4</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+                <a href="/">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="dag-container">
+        <h2>DAGs available for the User: ck</h2>
+        <h3>DAG number 1: mydag1</h3>
+        <table class="dag-table">
+            <thead>
+                <tr>
+                    <th>DAG ID</th>
+                    <th>DAG Name</th>
+                    <th>Task ID</th>
+                    <th>Task Name</th>
+                    <th>Task Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>5</td>
+                    <td>mydag1</td>
+                    <td>1</td>
+                    <td>mydag1_t1</td>
+                    <td>success</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>mydag1</td>
+                    <td>2</td>
+                    <td>mydag1_t2</td>
+                    <td>failed</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>mydag1</td>
+                    <td>3</td>
+                    <td>mydag1_t3</td>
+                    <td>upstreamfailed</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>mydag1</td>
+                    <td>4</td>
+                    <td>mydag1_t4</td>
+                    <td>upstreamfailed</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>DAG number 2: mydag2</h3>
+        <table class="dag-table">
+            <thead>
+                <tr>
+                    <th>DAG ID</th>
+                    <th>DAG Name</th>
+                    <th>Task ID</th>
+                    <th>Task Name</th>
+                    <th>Task Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>6</td>
+                    <td>mydag2</td>
+                    <td>1</td>
+                    <td>mydag2_t1</td>
+                    <td>failed</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>mydag2</td>
+                    <td>2</td>
+                    <td>mydag2_t2</td>
+                    <td>success</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>mydag2</td>
+                    <td>3</td>
+                    <td>mydag2_t3</td>
+                    <td>success</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

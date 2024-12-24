@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/landing2.css">
+    <style>
+        .welcome-message {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            color: #333;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <title>Landing Page</title>
+</head>
+<body>
+    <div class="area"></div>
+    <div class="welcome-message" id="welcome-message">
+        Welcome to the User Page, ck!
+    </div>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="/UserInfoSpecification">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">User Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/config_dag">
+                    <i class="fa fa-globe fa-2x"></i>
+                    <span class="nav-text">DAG Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/datavalidver">
+                    <i class="fa fa-comments fa-2x"></i>
+                    <span class="nav-text">Configure DAG</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/realdagconfig">
+                    <i class="fa fa-camera-retro fa-2x"></i>
+                    <span class="nav-text">Data Validation and Verification</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cogs fa-2x"></i>
+                    <span class="nav-text">Test2</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-map-marker fa-2x"></i>
+                    <span class="nav-text">Test3</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-info fa-2x"></i>
+                    <span class="nav-text">Test4</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+                <a href="/">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>
+

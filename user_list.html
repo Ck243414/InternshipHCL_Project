@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link rel="stylesheet" type="text/css" href="/assets/landing3admin.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: right;
+            font-size: 18px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header .buttons {
+            display: flex;
+            align-items: center;
+        }
+        .header .buttons button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .area {
+            margin: 20px;
+        }
+        .main-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .main-menu ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #333;
+            color: white;
+        }
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="session-info">
+
+        </div>
+    </div>
+    <div class="area"></div>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="/user_info">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">
+                       User Information 
+                    </span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="#">
+                    <i class="fa fa-globe fa-2x"></i>
+                    <span class="nav-text">
+                        User List 
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+                <a href="/">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="content">
+        <h1>User List</h1>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Last Logged In</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/backend_api/users') 
+                .then(response => response.json())
+                .then(data => {
+                    const userTableBody = document.getElementById("userTableBody");
+                    userTableBody.innerHTML = "";
+                    data.forEach(user => {
+                        const randomTime = generateRandomTime();
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${user.username}</td>
+                            <td>${randomTime}</td>
+                        `;
+                        userTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching user data:', error));
+        });
+
+        function generateRandomTime() {
+            const hours = String(Math.floor(Math.random() * 24)).padStart(2, '0');
+            const minutes = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+            const seconds = String(Math.floor(Math.random() * 60)).padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
+    </script>
+</body>
+</html>

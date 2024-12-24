@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/landing2.css">
+    <style>
+        .content-container {
+            margin: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .action-buttons button {
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .loading-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .dag-table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+        }
+        .dag-table th, .dag-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        .dag-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <title>Data Validation and Verification</title>
+</head>
+<body>
+    <div class="area"></div>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="/UserInfoSpecification">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">User Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/config_dag">
+                    <i class="fa fa-globe fa-2x"></i>
+                    <span class="nav-text">DAG Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/datavalidver">
+                    <i class="fa fa-comments fa-2x"></i>
+                    <span class="nav-text">Configure DAG</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/realdagconfig">
+                    <i class="fa fa-camera-retro fa-2x"></i>
+                    <span class="nav-text">Data Validation and Verification</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cogs fa-2x"></i>
+                    <span class="nav-text">Test2</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-map-marker fa-2x"></i>
+                    <span class="nav-text">Test3</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-info fa-2x"></i>
+                    <span class="nav-text">Test4</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+                <a href="/">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="content-container">
+        <h2>Currently logged in User: ck</h2>
+        <p>Select a DAG to proceed</p>
+        <div class="form-group">
+            <label for="dag-select">Select DAG</label>
+            <select id="dag-select" name="dag-select">
+                <option value="mydag1">mydag1</option>
+                <option value="mydag2">mydag2</option>
+            </select>
+        </div>
+        <div class="action-buttons">
+            <button onclick="showAddDAGFields()">Add New DAG</button>
+            <button onclick="modifyDAG()">Modify DAG</button>
+        </div>
+        <div id="add-dag-fields" style="display: none;">
+            <div class="form-group">
+                <label for="new-dag-url">DAG URL</label>
+                <input type="text" id="new-dag-url" name="new-dag-url">
+            </div>
+            <div class="form-group">
+                <label for="new-dag-name">DAG Name</label>
+                <input type="text" id="new-dag-name" name="new-dag-name">
+            </div>
+            <div class="action-buttons">
+                <button onclick="addNewDAGToDropdown()">Add</button>
+            </div>
+            <div id="task-details" style="display: none;">
+                <p>Enter task details:</p>
+                <table class="dag-table">
+                    <thead>
+                        <tr>
+                            <th>Task ID</th>
+                            <th>Task Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="task-table-body">
+                        <tr>
+                            <td><input type="text" name="task-id"></td>
+                            <td><input type="text" name="task-name"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="action-buttons">
+                    <button onclick="addTaskDetails()">Add Task Details</button>
+                </div>
+            </div>
+        </div>
+        <div id="modify-dag-details" style="display: none;">
+            <p>Modify DAG details:</p>
+            <table class="dag-table">
+                <thead>
+                    <tr>
+                        <th>Task ID</th>
+                        <th>Task Name</th>
+                    </tr>
+                </thead>
+                <tbody id="modify-dag-table-body">
+                    <tr>
+                        <td><input type="text" name="task-id" value="sample-id"></td>
+                        <td><input type="text" name="task-name" value="sample-task"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="action-buttons">
+                <button onclick="modifyTaskDetails()">Modify</button>
+            </div>
+        </div>
+    </div>
+    <div class="loading-container" id="loading-container">
+        <div class="scene">
+            <div class="shadow"></div>
+            <div class="jumper">
+                <div class="spinner">
+                    <div class="cuboid">
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showAddDAGFields() {
+            document.getElementById('add-dag-fields').style.display = 'block';
+        }
+
+        function addNewDAGToDropdown() {
+            const newDAGName = document.getElementById('new-dag-name').value.trim();
+            if (newDAGName) {
+                const dagSelect = document.getElementById('dag-select');
+                const newOption = document.createElement('option');
+                newOption.value = newDAGName;
+                newOption.text = newDAGName;
+                dagSelect.add(newOption);
+                document.getElementById('task-details').style.display = 'block';
+            }
+        }
+
+        function addTaskDetails() {
+            alert("DAG successfully added");
+        }
+
+        function modifyDAG() {
+            const selectedDAG = document.getElementById('dag-select').value;
+            const modifyTableBody = document.getElementById('modify-dag-table-body');
+            modifyTableBody.innerHTML = `
+                <tr>
+                    <td><input type="text" name="task-id" value="${selectedDAG}-task1-id"></td>
+                    <td><input type="text" name="task-name" value="${selectedDAG}-task1-name"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="task-id" value="${selectedDAG}-task2-id"></td>
+                    <td><input type="text" name="task-name" value="${selectedDAG}-task2-name"></td>
+                </tr>
+            `;
+            document.getElementById('modify-dag-details').style.display = 'block';
+        }
+
+        function modifyTaskDetails() {
+            alert("DAG successfully modified");
+        }
+    </script>
+</body>
+</html>

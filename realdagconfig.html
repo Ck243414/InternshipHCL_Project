@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/landing2.css">
+    <style>
+        .content-container {
+            margin: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .execute-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .loading-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .dag-status {
+            cursor: pointer;
+            color: black;
+            text-decoration: underline;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 800px; 
+            max-height: 70%; 
+            overflow-y: auto;
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .popup h2 {
+            margin-top: 0;
+        }
+
+        .popup-content {
+            margin-top: 20px;
+        }
+
+        .popup button {
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .task-detail-table {
+            margin-top: 20px;
+        }
+    </style>
+    <title>Real DAG Configuration</title>
+</head>
+<body>
+    <div class="area"></div>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="/UserInfoSpecification">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">User Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/config_dag">
+                    <i class="fa fa-globe fa-2x"></i>
+                    <span class="nav-text">DAG Information</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/datavalidver">
+                    <i class="fa fa-comments fa-2x"></i>
+                    <span class="nav-text">Configure DAG</span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a href="/realdagconfig">
+                    <i class="fa fa-camera-retro fa-2x"></i>
+                    <span class="nav-text">Data Validation and Verification</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cogs fa-2x"></i>
+                    <span class="nav-text">Test2</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-map-marker fa-2x"></i>
+                    <span class="nav-text">Test3</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-info fa-2x"></i>
+                    <span class="nav-text">Test4</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+                <a href="/">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="content-container">
+        <h2>Currently logged in User: ck</h2>
+        <p>Enter necessary DAG details</p>
+        <div class="form-group">
+            <label for="dag-url">DAG URL</label>
+            <input type="text" id="dag-url" name="dag-url">
+        </div>
+        <div class="form-group">
+            <label for="dag-id">DAG ID</label>
+            <input type="text" id="dag-id" name="dag-id">
+        </div>
+        <button class="execute-button" onclick="executeDAG()">Execute DAG</button>
+    </div>
+    <div class="loading-container" id="loading-container">
+        <div class="scene">
+            <div class="shadow"></div>
+            <div class="jumper">
+                <div class="spinner">
+                    <div class="cuboid">
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                        <div class="cuboid__side"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
+    <div class="popup" id="popup">
+        <h2 id="popupTitle"></h2>
+        <div class="popup-content" id="popupContent"></div>
+        <div class="task-detail-table" id="taskDetailTable">
+            <table class="dag-table">
+                <thead>
+                    <tr>
+                        <th>Task ID</th>
+                        <th>Task Name</th>
+                        <th>Old Status</th>
+                        <th>New Status</th>
+                    </tr>
+                </thead>
+                <tbody id="taskDetailTableBody">
+                    <tr>
+                        <td colspan="4">Click on a task to see details here.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        function executeDAG() {
+            const dagIdInput = document.getElementById('dag-id').value.trim().toLowerCase();
+            const loadingContainer = document.getElementById('loading-container');
+            const contentContainer = document.querySelector('.content-container');
+            
+            loadingContainer.style.display = 'flex';
+
+            setTimeout(() => {
+                loadingContainer.style.display = 'none';
+                if (dagIdInput === 'mydag1') {
+                    displayDAGStatus('mydag1', 'Failed', [
+                        { taskId: '1', taskName: 'mydag1_t1', status: 'success' },
+                        { taskId: '2', taskName: 'mydag1_t2', status: 'success' },
+                        { taskId: '3', taskName: 'mydag1_t3', status: 'failed' },
+                        { taskId: '4', taskName: 'mydag1_t4', status: 'upstreamfailed' }
+                    ]);
+                } else if (dagIdInput === 'mydag2') {
+                    displayDAGStatus('mydag2', 'Success', [
+                        { taskId: '1', taskName: 'mydag2_t1', status: 'success' },
+                        { taskId: '2', taskName: 'mydag2_t2', status: 'success' },
+                        { taskId: '3', taskName: 'mydag2_t3', status: 'success' },
+                        { taskId: '4', taskName: 'mydag2_t4', status: 'success' }
+                    ]);
+                } else {
+                    alert('Invalid DAG ID entered. Please enter either mydag1 or mydag2.');
+                }
+            }, 1500); 
+        }
+
+        function displayDAGStatus(dagName, status, tasks) {
+            const contentContainer = document.querySelector('.content-container');
+            const statusElement = document.createElement('div');
+            statusElement.classList.add('dag-status');
+            statusElement.textContent = `Status of DAG ${dagName}: ${status}`;
+            statusElement.onclick = () => displayPopup(dagName, status, tasks);
+            contentContainer.appendChild(statusElement);
+        }
+
+        function displayPopup(dagName, status, tasks) {
+            const popupOverlay = document.getElementById('popupOverlay');
+            const popup = document.getElementById('popup');
+            const popupTitle = document.getElementById('popupTitle');
+            const popupContent = document.getElementById('popupContent');
+
+            popupTitle.textContent = `Status of DAG ${dagName} - ${status}`;
+
+            let tableHtml = `<table class="dag-table">
+                                <thead>
+                                    <tr>
+                                        <th>Task ID</th>
+                                        <th>Task Name</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+
+            tasks.forEach(task => {
+                tableHtml += `<tr>
+                                <td>${task.taskId}</td>
+                                <td class="task-name" onclick="displayTaskDetails(${JSON.stringify(task).replace(/"/g, '&quot;')})">${task.taskName}</td>
+                                <td>${task.status}</td>
+                              </tr>`;
+            });
+
+            tableHtml += `</tbody></table>`;
+
+            popupContent.innerHTML = tableHtml;
+
+            popupOverlay.style.display = 'block';
+            popup.style.display = 'block';
+        }
+
+        function displayTaskDetails(task) {
+            const taskDetailTableBody = document.getElementById('taskDetailTableBody');
+
+            taskDetailTableBody.innerHTML = '';
+
+            const statuses = ['failed', 'success', 'upstreamfailed'];
+            const newStatus = statuses[Math.floor(Math.random() * statuses.length)];
+
+            let rowHtml = `<tr>
+                            <td>${task.taskId}</td>
+                            <td>${task.taskName}</td>
+                            <td>${task.status}</td>
+                            <td>${newStatus}</td>
+                          </tr>`;
+
+            taskDetailTableBody.innerHTML = rowHtml;
+        }
+
+        function closePopup() {
+            const popupOverlay = document.getElementById('popupOverlay');
+            const popup = document.getElementById('popup');
+
+            popupOverlay.style.display = 'none';
+            popup.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
