@@ -1,0 +1,7 @@
+Necessary commands to be run for installation of the necessary packages for the Login.js program:-
+1. npm install express body-parser
+2. npm install mysql2
+3. pip install requests
+4. pip install Flask
+
+Also make sure to have the requires parsers and editors for HTML,CSS,Js,SQL,Python are installed
